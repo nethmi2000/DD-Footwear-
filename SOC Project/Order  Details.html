@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Consumer</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="result"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchData();
+    });
+
+    async function fetchData() {
+        try {
+            const response = await fetch('https://localhost:7099/api/Order');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            displayData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function displayData(data) {
+        const resultContainer = document.getElementById('result');
+        
+        if (data.length === 0) {
+            resultContainer.innerHTML = '<p>No data available.</p>';
+            return;
+        }
+
+        let html = '<table class="table table-bordered"><thead><tr><th>OrderId</th><th>UserId</th><th>ProductId</th><th>Quantity</th><th>Price</th></tr></thead><tbody>';
+        
+        data.forEach(order => {
+            html += `<tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.userId}</td>
+                        <td>${order.productId}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.price}</td>
+                    </tr>`;
+        });
+
+        html += '</tbody></table>';
+        resultContainer.innerHTML = html;
+    }
+</script>
+
+<!-- Bootstrap JS and Popper.js CDN -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

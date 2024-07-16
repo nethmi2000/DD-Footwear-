@@ -1,0 +1,193 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footwear Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<form action="submit_order.php" method="POST">
+    <h2>Order Footwear</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+
+    <label for="footwear_type">Footwear Type:</label>
+    <select id="footwear_type" name="footwear_type" required>
+        <option value="">Select Type</option>
+        <option value=" Pooma">Pooma</option>
+        <option value="Waves">Waves</option>
+        <option value="Beet">Beet</option>
+        <option value="Bata">Bata</option>
+        <option value="Beach">Beach</option>
+        <option value="Boots">Boots</option>
+        <option value="Flats">Flats</option>
+        <option value="Heels">Heels</option>
+        <option value="Nike">Nike</option>
+    </select>
+
+    <label for="product_id">Product Id:</label>
+    <input type="text" id="product_id" name="product_id" required>
+
+    <label for="product_name">Product Name:</label>
+    <input type="text" id="product_name" name="product_name" required>
+
+    <label for="quantity">Quantity:</label>
+    <input type="text" id="quantity" name="quantity" required>
+
+    <label for="size">Size:</label>
+    <input type="text" id="size" name="size" required>
+
+    <label for="price">Price:</label>
+    <textarea id="price" name="price" rows="4"></textarea>
+
+    <input type="submit" value="Place Order">
+</form>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footwear Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<form id="orderForm">
+    <h2>Order Footwear</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+
+    <label for="footwear_type">Footwear Type:</label>
+    <select id="footwear_type" name="footwear_type" required>
+        <option value="">Select Type</option>
+        <option value="Pooma">Pooma</option>
+        <option value="Waves">Waves</option>
+        <option value="Beet">Beet</option>
+        <option value="Bata">Bata</option>
+        <option value="Beach">Beach</option>
+        <option value="Boots">Boots</option>
+        <option value="Flats">Flats</option>
+        <option value="Heels">Heels</option>
+        <option value="Nike">Nike</option>
+    </select>
+
+    <label for="product_id">Product Id:</label>
+    <input type="text" id="product_id" name="product_id" required>
+
+    <label for="product_name">Product Name:</label>
+    <input type="text" id="product_name" name="product_name" required>
+
+    <!-- <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" required> -->
+
+    <label for="size">Size:</label>
+    <input type="text" id="size" name="size" required>
+
+    <label for="base_price">Base Price:</label>
+    <input type="number" id="base_price" name="base_price" min="0.00" step="0.01" required>
+
+    <label for="additional_price">Additional Price:</label>
+    <input type="number" id="quantity" name="quantity" min="0.00" step="0.01">
+
+    <label for="total_price">Total Price:</label>
+    <input type="text" id="total_price" name="total_price" readonly>
+
+    <input type="button" value="Calculate Price" onclick="calculateTotalPrice()">
+
+    <input type="submit" value="Place Order">
+</form>
+
+<script>
+    // Calculate total price based on base price and additional price
+    function calculateTotalPrice() {
+        var basePrice = parseFloat(document.getElementById('base_price').value);
+        // var additionalPrice = parseFloat(document.getElementById('additional_price').value);
+        var quantity = parseFloat(document.getElementById('quantity').value);
+
+        // If additional price is not a number, set it to 0
+        if (isNaN(quantity)) {
+            quantity = 0;
+        }
+
+        // Calculate total price
+        var totalPrice = (basePrice * quantity) ;
+
+        // Display total price
+        document.getElementById('total_price').value = totalPrice.toFixed(2);
+    }
+</script>
+
+</body>
+</html>
